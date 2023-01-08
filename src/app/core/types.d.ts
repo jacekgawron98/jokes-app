@@ -9,3 +9,8 @@ interface Category {
     code: string,
     name: string
 }
+
+interface DialogData {
+    categoryId: string,
+    content: string
+}

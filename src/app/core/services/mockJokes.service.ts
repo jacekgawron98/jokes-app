@@ -27,11 +27,19 @@ export class MockJokesService extends JokesBaseService {
     }
 
     override getCategories(): Category[] {
-        throw new Error('Method not implemented.');
+      return MOCK_CATEGORIES;
     }
 
-    override addJoke(joke: Joke): boolean {
-        throw new Error('Method not implemented.');
+    override addJoke(categoryId: string, content: string): boolean {
+      const category = MOCK_CATEGORIES.find(cat => cat.id === categoryId);
+      const newJoke = {
+        id: this.getUniqueId(4),
+        category: category ? category : { id: "none", code: '', name: ''}, 
+        content: content
+      }  
+      this._jokes.push(newJoke)
+      console.log(this._jokes)
+      return true;
     }
 
     override deleteJoke(is: string): boolean {
@@ -40,6 +48,15 @@ export class MockJokesService extends JokesBaseService {
 
     private getRandomInt(min: number, max: number){
         return Math.floor(Math.random() * (max - min + 1) ) + min;
+    }
+
+   private getUniqueId(parts: number): string {
+      const stringArr = [];
+      for(let i = 0; i< parts; i++){
+        const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        stringArr.push(S4);
+      }
+      return stringArr.join('-');
     }
 }
 
