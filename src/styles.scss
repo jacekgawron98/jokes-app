@@ -12,11 +12,78 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$jokes-app-primary: mat.define-palette(mat.$indigo-palette);
+$c-primary: (
+    50 : #fff9e3,
+    100 : #fff0b9,
+    200 : #ffe68a,
+    300 : #ffdb5b,
+    400 : #ffd438,
+    500 : #ffcc15,
+    600 : #ffc712,
+    700 : #ffc00f,
+    800 : #ffb90c,
+    900 : #ffad06,
+    A100 : #ffffff,
+    A200 : #fffbf3,
+    A400 : #ffe8c0,
+    A700 : #ffdfa7,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$c-warn: (
+    50 : #fceaea,
+    100 : #f7c9c9,
+    200 : #f2a6a6,
+    300 : #ec8282,
+    400 : #e86767,
+    500 : #e44c4c,
+    600 : #e14545,
+    700 : #dd3c3c,
+    800 : #d93333,
+    900 : #d12424,
+    A100 : #ffffff,
+    A200 : #ffd9d9,
+    A400 : #ffa6a6,
+    A700 : #ff8c8c,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$jokes-app-primary: mat.define-palette($c-primary);
 $jokes-app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$jokes-app-warn: mat.define-palette(mat.$red-palette);
+$jokes-app-warn: mat.define-palette($c-warn);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
