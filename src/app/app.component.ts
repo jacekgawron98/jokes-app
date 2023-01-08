@@ -13,9 +13,9 @@ import { Component } from '@angular/core';
         </div>
       </mat-sidenav>
       <mat-sidenav-content>
+        <router-outlet></router-outlet>
       </mat-sidenav-content>
-      </mat-sidenav-container>
-    <router-outlet></router-outlet>
+    </mat-sidenav-container>
   `,
   styleUrls: ['./app.component.scss']
 })
