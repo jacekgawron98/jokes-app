@@ -1,0 +1,39 @@
+.mat-drawer-container {
+    background-color: #fff;
+}
+
+.menu-header {
+    border-bottom: 2px solid rgba(0, 0, 0, 1);
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    
+    &__link {
+        margin-left: 16px;
+        text-decoration: none;
+
+        &--active {
+            color: #FFCC15 !important;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        &__link {
+            margin-left: unset;
+            margin-bottom: 8px;
+        }
+    }
+
+}
+
+.sidenav {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-toolbar {
+    background: #fff;
+}
