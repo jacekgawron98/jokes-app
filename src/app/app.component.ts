@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
+    <toaster></toaster>
     <menu-header (toggleMenuClicked)='sidenav.toggle()'></menu-header>
     <mat-sidenav-container>
       <mat-sidenav #sidenav position='end' mode='over' >

@@ -40,7 +40,7 @@ export class AddJokeDialogComponent implements OnInit {
         private jokesService: JokesBaseService,
         private dialogRef: MatDialogRef<AddJokeDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
+    ) {}
 
     ngOnInit() { 
         this.categories = this.jokesService.getCategories();

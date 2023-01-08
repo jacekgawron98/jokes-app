@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { JokesBaseService } from 'src/app/core/services/jokesBase.service';
 import { ConfirmDialogComponent } from 'src/app/shared/confirmDialog/confirmDialog.component';
+import { ToasterService } from 'src/app/shared/toaster/toaster.service';
 
 @Component({
     selector: 'my-joke-card',
@@ -24,7 +25,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/confirmDialog/confirmDial
 export class MyJokeCardComponent implements OnInit {
     @Input() joke: Joke | undefined = undefined;
     @Output() jokeDeleted = new EventEmitter<string>()
-    constructor(private jokesService: JokesBaseService, private dialog: MatDialog) { }
+    constructor(private jokesService: JokesBaseService, private dialog: MatDialog, private toasterService: ToasterService) { }
 
     ngOnInit() { }
 
@@ -36,8 +37,13 @@ export class MyJokeCardComponent implements OnInit {
     
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.jokesService.deleteJoke(this.joke?.id)
-                this.jokeDeleted.emit(this.joke?.id);
+                const deleteResult = this.jokesService.deleteJoke(this.joke?.id)
+                if (deleteResult) {
+                    this.toasterService.showToaster('Żart został pomyślnie usunięty','Sukces','toaster--ok')
+                    this.jokeDeleted.emit(this.joke?.id);
+                } else {
+                    this.toasterService.showToaster('Nie udało sie usunąć żartu', 'Niepowodzenie', 'toaster--warn')
+                }
             }
         });
     }

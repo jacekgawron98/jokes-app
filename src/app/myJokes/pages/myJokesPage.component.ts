@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { JokesBaseService } from 'src/app/core/services/jokesBase.service';
 import { AddJokeDialogComponent } from 'src/app/shared/addJoke/addJokeDialog.component';
+import { ToasterService } from 'src/app/shared/toaster/toaster.service';
 
 @Component({
     selector: 'my-jokes-page',
@@ -20,7 +21,7 @@ import { AddJokeDialogComponent } from 'src/app/shared/addJoke/addJokeDialog.com
 
 export class MyJokesPageComponent implements OnInit {
     public jokes: Joke[] = []
-    constructor(private jokesService: JokesBaseService, private dialog: MatDialog) { }
+    constructor(private jokesService: JokesBaseService, private dialog: MatDialog, private toasterService: ToasterService) { }
 
     ngOnInit() { 
         this.jokes = this.jokesService.getJokes();
@@ -34,8 +35,13 @@ export class MyJokesPageComponent implements OnInit {
     
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.jokesService.addJoke(result.categoryId,result.content);
-                this.jokes = this.jokesService.getJokes();
+                const addingResult = this.jokesService.addJoke(result.categoryId,result.content);
+                if(addingResult) {
+                    this.toasterService.showToaster('Żart został pomyślnie dodany','Sukces','toaster--ok');
+                    this.jokes = this.jokesService.getJokes();
+                } else {
+                    this.toasterService.showToaster('Nie udało się dodać nowego żartu','Niepowodzenie','toaster--warn');
+                }
             }
         });
     }

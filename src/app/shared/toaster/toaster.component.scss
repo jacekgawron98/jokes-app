@@ -1,0 +1,55 @@
+$toaster-color-ok: #6AC068;
+$toaster-color-warn: #E44C4C;
+
+.toaster {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    top: 32px;
+    right: 32px;
+    z-index: 99;
+    
+    width: 470px;
+    padding: 16px;
+    border-radius: 8px;
+    color: #fff;
+
+    &--ok {
+        background-color: $toaster-color-ok;
+    }
+
+    &--warn {
+        background-color: $toaster-color-warn;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__actions {
+        font-size: 12px;
+        .close-icon {
+            cursor: pointer;
+        }
+    }
+
+    .message {
+        &__title {
+            margin-bottom: 16px;
+        }
+
+        &__description {
+            font-size: 14px;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        max-width: 300px;
+        right: unset;
+        top: unset;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

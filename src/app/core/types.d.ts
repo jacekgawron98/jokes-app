@@ -14,3 +14,5 @@ interface DialogData {
     categoryId: string,
     content: string
 }
+
+type ToasterType = 'toaster--ok' | 'toaster--warn' | 'toaster--info';

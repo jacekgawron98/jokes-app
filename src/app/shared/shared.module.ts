@@ -16,6 +16,8 @@ import { AddJokeDialogComponent } from './addJoke/addJokeDialog.component';
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from './confirmDialog/confirmDialog.component';
+import { ToasterComponent } from './toaster/toaster.component';
+import { ToasterService } from './toaster/toaster.service';
 
 @NgModule({
     imports: [
@@ -33,8 +35,8 @@ import { ConfirmDialogComponent } from './confirmDialog/confirmDialog.component'
         MatSelectModule,
         LayoutModule
     ],
-    exports: [MenuComponent, AddJokeDialogComponent, ConfirmDialogComponent],
-    declarations: [MenuComponent, AddJokeDialogComponent, ConfirmDialogComponent],
-    providers: [],
+    exports: [MenuComponent, AddJokeDialogComponent, ConfirmDialogComponent, ToasterComponent],
+    declarations: [MenuComponent, AddJokeDialogComponent, ConfirmDialogComponent, ToasterComponent],
+    providers: [ToasterService],
 })
 export class SharedModule { }
