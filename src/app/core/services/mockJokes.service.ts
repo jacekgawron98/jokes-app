@@ -1,56 +1,63 @@
 import { Injectable } from '@angular/core';
 import { JokesBaseService } from './jokesBase.service';
+import { Observable, find, from, map, of} from 'rxjs';
 
+//Ze względu na brak serwera wykorzystywany jest mockowy serwis
+//Faktyczny serwis korzystałby z HttpClient, który zwraca Observable dlatego też tutaj symuluję to zachowanie 
 @Injectable({providedIn: 'root'})
 export class MockJokesService extends JokesBaseService {
-    private _jokes: Joke[] = [];
-
-    override getJokes(): Joke[] {
-        if (this._jokes.length === 0) {
-            const jokes = MOCK_JOKES.map( joke => {
-                const category = MOCK_CATEGORIES.find(cat => cat.id === joke.category);
-                return {
-                    id: joke.id,
-                    content: joke.content,
-                    category: category ? category : { id: "none", code: '', name: ''}
-                }
-            })
-            this._jokes = jokes;
+    override getJokes(): Observable<Joke[]> {
+      return of(MOCK_JOKES).pipe(
+        map(jokes => jokes.map(j => {
+          return {
+            id: j.id,
+            category: MOCK_CATEGORIES.find(cat => cat.id === j.category),
+            content: j.content
+          }
+        }))
+      )
+    }
+    override getRandomJoke(): Observable<Joke> {
+        const randomJoke = MOCK_JOKES[this.getRandomInt(0,MOCK_JOKES.length-1)]
+        const mappedJoke = {
+          id: randomJoke.id,
+          category: MOCK_CATEGORIES.find(cat => cat.id === randomJoke.category),
+          content: randomJoke.content
         }
-        return this._jokes;
-    }
-    override getRandomJoke(): Joke {
-        if(this._jokes.length === 0) {
-            this.getJokes();
-        }
-        return this._jokes[this.getRandomInt(0,this._jokes.length-1)]
+        console.log(mappedJoke)
+        return of(mappedJoke)
     }
 
-    override getCategories(): Category[] {
-      return MOCK_CATEGORIES;
+    override getCategories(): Observable<Category[]> {
+      return of(MOCK_CATEGORIES);
     }
 
-    override addJoke(categoryId: string, content: string): boolean {
+    override getCategory(id: string): Observable<Category|undefined> {
+      return from(MOCK_CATEGORIES).pipe(
+        find(cat => cat.id === id)
+      )
+    }
+
+    override addJoke(categoryId: string, content: string): Observable<boolean> {
       if (!categoryId || !content) {
-        return false;
+        return of(false);
       }
 
-      const category = MOCK_CATEGORIES.find(cat => cat.id === categoryId);
       const newJoke = {
         id: this.getUniqueId(4),
-        category: category ? category : { id: "none", code: '', name: ''}, 
+        category: categoryId,
         content: content
       }  
-      this._jokes.push(newJoke)
-      return true;
+      MOCK_JOKES.push(newJoke)
+      return of(true);
     }
 
-    override deleteJoke(id: string | undefined): boolean {
+    override deleteJoke(id: string | undefined): Observable<boolean> {
       if (!id) {
-        return false;
+        return of(false);
       }
-      this._jokes = this._jokes.filter(joke => joke.id !== id);
-      return true;
+      MOCK_JOKES = MOCK_JOKES.filter(joke => joke.id !== id);
+      return of(true);
     }
 
     private getRandomInt(min: number, max: number){
@@ -67,7 +74,7 @@ export class MockJokesService extends JokesBaseService {
     }
 }
 
-const MOCK_JOKES = [
+let MOCK_JOKES = [
     {
       "id": "7474274a-e7df-4361-9caa-d6a218761ef4",
       "category": "b99be362-7044-4bca-aed2-e734f7999e5e",

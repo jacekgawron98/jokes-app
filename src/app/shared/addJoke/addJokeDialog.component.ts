@@ -43,7 +43,9 @@ export class AddJokeDialogComponent implements OnInit {
     ) {}
 
     ngOnInit() { 
-        this.categories = this.jokesService.getCategories();
+        this.jokesService.getCategories().subscribe( result => {
+            this.categories = result;
+        });
         this.selectOptions = this.categories.map(cat => {
             return {
                 value: cat.id,

@@ -29,7 +29,9 @@ export class JokePageComponent implements OnInit {
     }
 
     getNextJoke() {
-        this.joke = this.jokesService.getRandomJoke();
+        this.jokesService.getRandomJoke().subscribe( result => {
+            this.joke = result
+        });
     }
 
     openDialog(): void {

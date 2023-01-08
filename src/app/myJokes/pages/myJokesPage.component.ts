@@ -24,7 +24,9 @@ export class MyJokesPageComponent implements OnInit {
     constructor(private jokesService: JokesBaseService, private dialog: MatDialog, private toasterService: ToasterService) { }
 
     ngOnInit() { 
-        this.jokes = this.jokesService.getJokes();
+        this.jokesService.getJokes().subscribe( result => {
+            this.jokes = result;
+        });
     }
 
     openDialog(): void {
@@ -38,7 +40,9 @@ export class MyJokesPageComponent implements OnInit {
                 const addingResult = this.jokesService.addJoke(result.categoryId,result.content);
                 if(addingResult) {
                     this.toasterService.showToaster('Żart został pomyślnie dodany','Sukces','toaster--ok');
-                    this.jokes = this.jokesService.getJokes();
+                    this.jokesService.getJokes().subscribe( result => {
+                        this.jokes = result
+                    });
                 } else {
                     this.toasterService.showToaster('Nie udało się dodać nowego żartu','Niepowodzenie','toaster--warn');
                 }
