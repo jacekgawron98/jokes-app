@@ -1,0 +1,12 @@
+$primary-color: #FFCC15;
+
+.page {
+    margin: auto;
+    margin-top: 156px;
+    max-width: 768px;
+
+    &__bottom {
+        display: flex;
+        justify-content: end;
+    }
+}

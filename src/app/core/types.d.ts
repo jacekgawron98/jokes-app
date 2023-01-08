@@ -1,6 +1,6 @@
 interface Joke {
     id: string,
-    category: string,
+    category?: Category,
     content: string
 }
 

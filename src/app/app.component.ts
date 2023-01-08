@@ -11,8 +11,10 @@ import { Component } from '@angular/core';
           <a mat-button routerLinkActive="menu__link--active" class='menu__link' routerLink='/my-jokes'>Moje żarty</a>
         </div>
       </mat-sidenav>
-      <router-outlet></router-outlet>
-    </mat-sidenav-container>
+      <mat-sidenav-content>
+      </mat-sidenav-content>
+      </mat-sidenav-container>
+    <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.scss']
 })
