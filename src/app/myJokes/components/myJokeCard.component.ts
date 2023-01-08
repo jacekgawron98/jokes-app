@@ -18,7 +18,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/confirmDialog/confirmDial
             </mat-card-content>
         </mat-card>
     `,
-    styleUrls: ['./myJokeCard.compoennt.scss']
+    styleUrls: ['./myJokeCard.component.scss']
 })
 
 export class MyJokeCardComponent implements OnInit {
