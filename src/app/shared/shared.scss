@@ -4,9 +4,22 @@ $primary-color: #FFCC15;
     margin: auto;
     margin-top: 156px;
     max-width: 768px;
+  
+    &__top {
+        display: flex;
+    }
 
     &__bottom {
         display: flex;
         justify-content: end;
+    }
+
+    @media screen and (max-width: 1080px) {
+        max-width: 300px;
+        margin-top: 64px;
+
+        &__bottom, &__top {
+            justify-content: center;
+        }
     }
 }
