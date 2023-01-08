@@ -15,6 +15,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { AddJokeDialogComponent } from './addJoke/addJokeDialog.component';
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
+import { ConfirmDialogComponent } from './confirmDialog/confirmDialog.component';
 
 @NgModule({
     imports: [
@@ -32,8 +33,8 @@ import { FormsModule } from '@angular/forms';
         MatSelectModule,
         LayoutModule
     ],
-    exports: [MenuComponent, AddJokeDialogComponent],
-    declarations: [MenuComponent, AddJokeDialogComponent],
+    exports: [MenuComponent, AddJokeDialogComponent, ConfirmDialogComponent],
+    declarations: [MenuComponent, AddJokeDialogComponent, ConfirmDialogComponent],
     providers: [],
 })
 export class SharedModule { }

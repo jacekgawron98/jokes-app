@@ -31,6 +31,10 @@ export class MockJokesService extends JokesBaseService {
     }
 
     override addJoke(categoryId: string, content: string): boolean {
+      if (!categoryId || !content) {
+        return false;
+      }
+
       const category = MOCK_CATEGORIES.find(cat => cat.id === categoryId);
       const newJoke = {
         id: this.getUniqueId(4),
@@ -38,12 +42,15 @@ export class MockJokesService extends JokesBaseService {
         content: content
       }  
       this._jokes.push(newJoke)
-      console.log(this._jokes)
       return true;
     }
 
-    override deleteJoke(is: string): boolean {
-        throw new Error('Method not implemented.');
+    override deleteJoke(id: string | undefined): boolean {
+      if (!id) {
+        return false;
+      }
+      this._jokes = this._jokes.filter(joke => joke.id !== id);
+      return true;
     }
 
     private getRandomInt(min: number, max: number){

@@ -1,0 +1,16 @@
+.my-joke-card {
+    margin-bottom: 16px;
+
+    &__content {
+        margin: 16px 0;
+    }
+
+    &__right-aligned {
+        display: flex;
+        justify-content: flex-end;
+
+        &--small {
+            font-size: 14px;
+        }
+    }
+}

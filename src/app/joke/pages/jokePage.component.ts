@@ -21,7 +21,7 @@ import { AddJokeDialogComponent } from 'src/app/shared/addJoke/addJokeDialog.com
 
 export class JokePageComponent implements OnInit {
     public joke: Joke | undefined = undefined;
-    constructor(private jokesService: JokesBaseService,private dialog: MatDialog) { }
+    constructor(private jokesService: JokesBaseService, private dialog: MatDialog) { }
 
     ngOnInit() {
         this.getNextJoke();
@@ -40,5 +40,5 @@ export class JokePageComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
           this.jokesService.addJoke(result.categoryId,result.content)
         });
-      }
+    }
 }

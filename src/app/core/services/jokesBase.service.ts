@@ -8,5 +8,5 @@ export abstract class JokesBaseService {
     abstract getCategories(): Category[];
 
     abstract addJoke(categoryId: string, content: string): boolean;
-    abstract deleteJoke(is: string): boolean;
+    abstract deleteJoke(id: string | undefined): boolean;
 }
