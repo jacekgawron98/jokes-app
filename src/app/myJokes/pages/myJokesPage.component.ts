@@ -37,15 +37,16 @@ export class MyJokesPageComponent implements OnInit {
     
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                const addingResult = this.jokesService.addJoke(result.categoryId,result.content);
-                if(addingResult) {
-                    this.toasterService.showToaster('Żart został pomyślnie dodany','Sukces','toaster--ok');
-                    this.jokesService.getJokes().subscribe( result => {
-                        this.jokes = result
-                    });
-                } else {
-                    this.toasterService.showToaster('Nie udało się dodać nowego żartu','Niepowodzenie','toaster--warn');
-                }
+                this.jokesService.addJoke(result.categoryId,result.content).subscribe( addingResult => {
+                    if(addingResult) {
+                        this.toasterService.showToaster('Żart został pomyślnie dodany','Sukces','toaster--ok');
+                        this.jokesService.getJokes().subscribe( result => {
+                            this.jokes = result
+                        });
+                    } else {
+                        this.toasterService.showToaster('Nie udało się dodać nowego żartu','Niepowodzenie','toaster--warn');
+                    }
+                });
             }
         });
     }

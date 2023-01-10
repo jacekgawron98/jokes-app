@@ -41,12 +41,13 @@ export class JokePageComponent implements OnInit {
         }});
     
         dialogRef.afterClosed().subscribe(result => {
-            const addingResult = this.jokesService.addJoke(result.categoryId,result.content);
-            if(addingResult) {
-                this.toasterService.showToaster('Żart został pomyślnie dodany','Sukces','toaster--ok');
-            } else {
-                this.toasterService.showToaster('Nie udało się dodać nowego żartu','Niepowodzenie','toaster--warn');
-            }
+            this.jokesService.addJoke(result.categoryId,result.content).subscribe(addingResult => {
+                if(addingResult) {
+                    this.toasterService.showToaster('Żart został pomyślnie dodany','Sukces','toaster--ok');
+                } else {
+                    this.toasterService.showToaster('Nie udało się dodać nowego żartu','Niepowodzenie','toaster--warn');
+                }
+            });
         });
     }
 }
