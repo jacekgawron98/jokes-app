@@ -33,17 +33,19 @@ export class MyJokeCardComponent {
             title: 'Potwierdzenie', 
             description: 'Czy na pewno chcesz usunąć wybrany żart?'
         }});
-    
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                const deleteResult = this.jokesService.deleteJoke(this.joke?.id)
-                if (deleteResult) {
-                    this.toasterService.showToaster('Żart został pomyślnie usunięty','Sukces','toaster--ok')
-                    this.jokeDeleted.emit(this.joke?.id);
-                } else {
-                    this.toasterService.showToaster('Nie udało sie usunąć żartu', 'Niepowodzenie', 'toaster--warn')
-                }
-            }
-        });
+        dialogRef.afterClosed().subscribe(result => { this.onDialogClose(result) });
+    }
+
+    onDialogClose(result: any) {
+        if (!result) {
+            return
+        }
+        const deleteResult = this.jokesService.deleteJoke(this.joke?.id)
+        if (deleteResult) {
+            this.toasterService.showToaster('Żart został pomyślnie usunięty','Sukces','toaster--ok')
+            this.jokeDeleted.emit(this.joke?.id);
+        } else {
+            this.toasterService.showToaster('Nie udało sie usunąć żartu', 'Niepowodzenie', 'toaster--warn')
+        }
     }
 }
