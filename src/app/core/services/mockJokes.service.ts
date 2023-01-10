@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JokesBaseService } from './jokesBase.service';
-import { Observable, find, from, map, of} from 'rxjs';
+import { Observable, find, from, map, mergeMap, of, toArray} from 'rxjs';
 
 //Ze względu na brak serwera wykorzystywany jest mockowy serwis
 //Faktyczny serwis korzystałby z HttpClient, który zwraca Observable dlatego też tutaj symuluję to zachowanie 
@@ -8,24 +8,20 @@ import { Observable, find, from, map, of} from 'rxjs';
 export class MockJokesService extends JokesBaseService {
     override getJokes(): Observable<Joke[]> {
       return of(MOCK_JOKES).pipe(
-        map(jokes => jokes.map(j => {
-          return {
-            id: j.id,
-            category: MOCK_CATEGORIES.find(cat => cat.id === j.category),
-            content: j.content
-          }
-        }))
+        mergeMap(jokes => jokes),
+        mergeMap(joke => this.getCategory(joke.category).pipe(
+          map(category => this.buildJoke(joke,category))
+        )),
+        toArray()
       )
     }
+    
     override getRandomJoke(): Observable<Joke> {
-        const randomJoke = MOCK_JOKES[this.getRandomInt(0,MOCK_JOKES.length-1)]
-        const mappedJoke = {
-          id: randomJoke.id,
-          category: MOCK_CATEGORIES.find(cat => cat.id === randomJoke.category),
-          content: randomJoke.content
-        }
-        console.log(mappedJoke)
-        return of(mappedJoke)
+        return of(MOCK_JOKES[this.getRandomInt(0,MOCK_JOKES.length-1)]).pipe(
+          mergeMap(joke => this.getCategory(joke.category).pipe(
+            map(category => this.buildJoke(joke,category))
+          ))
+        )
     }
 
     override getCategories(): Observable<Category[]> {
@@ -64,13 +60,24 @@ export class MockJokesService extends JokesBaseService {
         return Math.floor(Math.random() * (max - min + 1) ) + min;
     }
 
-   private getUniqueId(parts: number): string {
+    private getUniqueId(parts: number): string {
       const stringArr = [];
       for(let i = 0; i< parts; i++){
         const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
         stringArr.push(S4);
       }
       return stringArr.join('-');
+    }
+
+    private buildJoke(
+      joke: {id: string, content: string, category: string}, 
+      category: Category | undefined
+    ): Joke {
+      return {
+        id: joke.id,
+        category: category,
+        content: joke.content
+      }
     }
 }
 
