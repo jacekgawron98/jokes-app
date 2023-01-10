@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToasterService } from './toaster.service';
 
 @Component({
@@ -17,14 +17,12 @@ import { ToasterService } from './toaster.service';
     styleUrls: ['./toaster.component.scss']
 })
 
-export class ToasterComponent implements OnInit {
+export class ToasterComponent {
     public title: string = 'Title';
     public message: string = 'Placeholder toast';
     public showToast: boolean = true;
     public type: string = 'Success';
     constructor(public toasterService: ToasterService) { }
-
-    ngOnInit() { }
 
     hideToaster() {
         this.toasterService.hideToaster();

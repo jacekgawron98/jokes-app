@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { JokesBaseService } from 'src/app/core/services/jokesBase.service';
 import { ConfirmDialogComponent } from 'src/app/shared/confirmDialog/confirmDialog.component';
@@ -22,12 +22,11 @@ import { ToasterService } from 'src/app/shared/toaster/toaster.service';
     styleUrls: ['./myJokeCard.component.scss']
 })
 
-export class MyJokeCardComponent implements OnInit {
+export class MyJokeCardComponent {
     @Input() joke: Joke | undefined = undefined;
     @Output() jokeDeleted = new EventEmitter<string>()
-    constructor(private jokesService: JokesBaseService, private dialog: MatDialog, private toasterService: ToasterService) { }
 
-    ngOnInit() { }
+    constructor(private jokesService: JokesBaseService, private dialog: MatDialog, private toasterService: ToasterService) { }
 
     openDialog() {
         const dialogRef = this.dialog.open(ConfirmDialogComponent,{data: {

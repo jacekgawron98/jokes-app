@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'joke-card',
@@ -22,10 +22,6 @@ import { Component, Input, OnInit } from '@angular/core';
     styleUrls: ['./jokeCard.component.scss','../../shared/shared.scss']
 })
 
-export class JokeCardComponent implements OnInit {
+export class JokeCardComponent {
     @Input() joke: Joke | undefined = undefined;
-
-    constructor() { }
-
-    ngOnInit() { }
 }
