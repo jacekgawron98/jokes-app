@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from './confirmDialog/confirmDialog.component';
 import { ToasterComponent } from './toaster/toaster.component';
 import { ToasterService } from './toaster/toaster.service';
+import { AddJokeDialogService } from './addJoke/addJokeDialog.service';
 
 @NgModule({
     imports: [
@@ -37,6 +38,6 @@ import { ToasterService } from './toaster/toaster.service';
     ],
     exports: [MenuComponent, AddJokeDialogComponent, ConfirmDialogComponent, ToasterComponent],
     declarations: [MenuComponent, AddJokeDialogComponent, ConfirmDialogComponent, ToasterComponent],
-    providers: [ToasterService],
+    providers: [ToasterService, AddJokeDialogService],
 })
 export class SharedModule { }

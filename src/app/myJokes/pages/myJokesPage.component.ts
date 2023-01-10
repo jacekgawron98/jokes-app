@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { JokesBaseService } from 'src/app/core/services/jokesBase.service';
-import { AddJokeDialogComponent } from 'src/app/shared/addJoke/addJokeDialog.component';
-import { ToasterService } from 'src/app/shared/toaster/toaster.service';
+import { AddJokeDialogService } from 'src/app/shared/addJoke/addJokeDialog.service';
 
 @Component({
     selector: 'my-jokes-page',
@@ -19,35 +18,31 @@ import { ToasterService } from 'src/app/shared/toaster/toaster.service';
     styleUrls: ['../../shared/shared.scss']
 })
 
-export class MyJokesPageComponent implements OnInit {
-    public jokes: Joke[] = []
-    constructor(private jokesService: JokesBaseService, private dialog: MatDialog, private toasterService: ToasterService) { }
+export class MyJokesPageComponent implements OnInit, OnDestroy {
+    public jokes: Joke[] = [];
+    private subs: Subscription = new Subscription();
 
+    constructor(private jokesService: JokesBaseService, private addJokeDialogService: AddJokeDialogService) { }
+    
     ngOnInit() { 
         this.jokesService.getJokes().subscribe( result => {
             this.jokes = result;
         });
     }
 
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
+
     openDialog(): void {
-        const dialogRef = this.dialog.open(AddJokeDialogComponent,{data: {
+        this.subs.add(this.addJokeDialogService.hasBeenAddedSubject$.subscribe(_ => {
+            this.jokesService.getJokes().subscribe( jokes => {
+                this.jokes = jokes;
+            })
+        }));
+        this.addJokeDialogService.openDialog({
             categoryId: '',
             content: ''
-        }});
-    
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.jokesService.addJoke(result.categoryId,result.content).subscribe( addingResult => {
-                    if(addingResult) {
-                        this.toasterService.showToaster('Żart został pomyślnie dodany','Sukces','toaster--ok');
-                        this.jokesService.getJokes().subscribe( result => {
-                            this.jokes = result
-                        });
-                    } else {
-                        this.toasterService.showToaster('Nie udało się dodać nowego żartu','Niepowodzenie','toaster--warn');
-                    }
-                });
-            }
         });
     }
 
