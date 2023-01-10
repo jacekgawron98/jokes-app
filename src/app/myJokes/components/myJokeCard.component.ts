@@ -40,12 +40,13 @@ export class MyJokeCardComponent {
         if (!result) {
             return
         }
-        const deleteResult = this.jokesService.deleteJoke(this.joke?.id)
-        if (deleteResult) {
-            this.toasterService.showToaster('Żart został pomyślnie usunięty','Sukces','toaster--ok')
-            this.jokeDeleted.emit(this.joke?.id);
-        } else {
-            this.toasterService.showToaster('Nie udało sie usunąć żartu', 'Niepowodzenie', 'toaster--warn')
-        }
+        this.jokesService.deleteJoke(this.joke?.id).subscribe( deleteResult => {
+            if (deleteResult) {
+                this.toasterService.showToaster('Żart został pomyślnie usunięty','Sukces','toaster--ok')
+                this.jokeDeleted.emit(this.joke?.id);
+            } else {
+                this.toasterService.showToaster('Nie udało sie usunąć żartu', 'Niepowodzenie', 'toaster--warn')
+            }
+        })
     }
 }
